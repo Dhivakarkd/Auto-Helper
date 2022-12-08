@@ -1,12 +1,15 @@
 import React, { Component } from "react";
 import { MDBInput } from "mdb-react-ui-kit";
-import { MDBBtn } from "mdb-react-ui-kit";
+import { MDBBtn, MDBBtnGroup ,MDBRadio} from "mdb-react-ui-kit";
 import { postImageUrl } from "./APIHelper";
+import { Combobox } from "react-widgets";
 
 class SearchComponent extends Component {
+  envConstant = ["dev", "test"];
+
   constructor(props) {
     super(props);
-    this.state = { value: "" };
+    this.state = { value: "", env: "dev" };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -16,30 +19,52 @@ class SearchComponent extends Component {
     this.setState({ value: event.target.value });
   }
 
+  setEnv(selectval) {
+    this.setState({ env: selectval });
+  }
+
   handleSubmit(event) {
-    console.log("Handlign for URL {}",this.state.value);
-    postImageUrl(this.state.value)
+    console.log("Handling for URL {}", this.state.value);
+    postImageUrl(this.state.value);
     event.preventDefault();
-    this.setState({ value: ""})
+    this.setState({ value: "" });
   }
 
   render() {
     return (
       <div>
-        <span>
-          <MDBInput
-            className="resizedTextbox"
-            id="typeURL"
-            type="url"
-            value={this.state.value}
-            placeholder="Enter Image URL"
-            onChange={this.handleChange}
-          />
-        </span>
-<br></br>
-        <span>
-          <MDBBtn onClick={this.handleSubmit}>Download</MDBBtn>
-        </span>
+    
+
+        <MDBInput
+          className="resizedTextbox"
+          id="typeURL"
+          type="url"
+          value={this.state.value}
+          placeholder="Enter Image URL"
+          onChange={this.handleChange}
+        />
+
+        <br></br>
+
+        <MDBBtn onClick={this.handleSubmit}>Download</MDBBtn>
+
+<br/>
+<br/>
+<MDBBtnGroup onButtonClick={c => console.log(c)}>
+      <MDBRadio btn btnColor='secondary' id='btn-radio' name='options' wrapperTag='span' label='Radio button' />
+      <MDBRadio
+        btn
+        btnColor='secondary'
+        id='btn-radio2'
+        name='options'
+        wrapperClass='mx-2'
+        wrapperTag='span'
+        label='Radio button'
+        defaultChecked
+      />
+    </MDBBtnGroup>
+
+
       </div>
     );
   }
